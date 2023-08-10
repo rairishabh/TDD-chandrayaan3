@@ -23,7 +23,17 @@ const move = (position, direction, change) => {
     return [newPosition, direction];
 };
 
+const executeU = (position, direction) => {
+    return [position, "U"]
+};
+
+const executeD = (position, direction) => {
+    return [position, "D"]
+};
+
 module.exports = {
     executeF,
-    executeB
+    executeB,
+    executeU,
+    executeD
 };
