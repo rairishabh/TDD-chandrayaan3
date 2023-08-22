@@ -1,4 +1,4 @@
-const { executeF, executeB, executeR, executeL, executeU, executeD, executeCommand, executeCommands } = require("./chandrayaan3")
+const { executeF, executeB, executeU, executeD, executeL, executeR, executeCommand, executeCommands, executeBoundaries } = require("./chandrayaan3")
 
 test("execute command f successfully", () => {
     const [position, direction] = executeF([0, 0, 0], "N")
@@ -12,17 +12,6 @@ test("execute command b successfully", () => {
     expect(direction).toEqual("D")
 })
 
-test("execute command r successfully", () => {
-    const [position, direction] = executeR([0, 7, 8], "S")
-    expect(position).toEqual([0, 7, 8])
-    expect(direction).toEqual("W")
-})
-
-test("execute command l successfully", () => {
-    const [position, direction] = executeL([0, 1, 0], "U")
-    expect(position).toEqual([0, 1, 0])
-    expect(direction).toEqual("W")
-})
 test("execute command u successfully", () => {
     const [position, direction] = executeU([0, 0, 0], "N")
     expect(position).toEqual([0, 0, 0])
@@ -33,6 +22,18 @@ test("execute command d successfully", () => {
     const [position, direction] = executeD([0, 0, 0], "N")
     expect(position).toEqual([0, 0, 0])
     expect(direction).toEqual("D")
+})
+
+test("execute command r successfully", () => {
+    const [position, direction] = executeR([0, 7, 8], "S")
+    expect(position).toEqual([0, 7, 8])
+    expect(direction).toEqual("W")
+})
+
+test("execute command l successfully", () => {
+    const [position, direction] = executeL([0, 1, 0], "U")
+    expect(position).toEqual([0, 1, 0])
+    expect(direction).toEqual("W")
 })
 
 test("execute command successfully", () => {
@@ -66,4 +67,10 @@ test("execute commands successfully", () => {
     const [position, direction] = executeCommands([0, 0, 0], "N", ["f", "r", "u", "b", "l"])
     expect(position).toEqual([0, 1, -1])
     expect(direction).toEqual("W")
+})
+
+test("boundaries for position on x axis", () => {
+    const [position, direction] = executeBoundaries([3, 2, 3], 'E', 'f')
+    expect(position).toEqual([3, 2, 3])
+    expect(direction).toEqual('E')
 })

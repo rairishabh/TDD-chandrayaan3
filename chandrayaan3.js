@@ -46,6 +46,16 @@ const executeB = (position, direction) => {
     return move(position, direction, change);
 };
 
+const move = (position, direction, change) => {
+    const newPosition = [...position];
+    const [index] = Object.entries(indexMove).find(([i, directions]) => directions.includes(direction));
+    newPosition[index] = newPosition[index] + change;
+    if (index == 0 && newPosition[index] > 3) {
+        return [position, direction]
+    }
+    return [newPosition, direction];
+};
+
 const executeU = (position, direction) => {
     return [position, "U"]
 };
@@ -56,9 +66,7 @@ const executeD = (position, direction) => {
 
 const executeL = (position, direction) => {
     const index = ["U", "D"].includes(direction) ? 0 : compass.indexOf(direction)
-    console.log("index>>>", index)
     const leftIndex = index == 0 ? compass.length - 1 : index - 1
-    console.log("elft>>>", leftIndex)
     return [position, compass[leftIndex]]
 };
 
@@ -68,20 +76,19 @@ const executeR = (position, direction) => {
     return [position, compass[rightIndex]]
 };
 
-const move = (position, direction, change) => {
-    const newPosition = [...position];
-    const [index] = Object.entries(indexMove).find(([i, directions]) => directions.includes(direction));
-    newPosition[index] = newPosition[index] + change;
-    return [newPosition, direction];
-};
+const executeBoundaries = (position, direction, command) => {
+    const change = positiveDirections.includes(direction) ? 1 : -1;
+    return move(position, direction, change)
+}
 
 module.exports = {
     executeF,
     executeB,
-    executeD,
-    executeR,
-    executeL,
     executeU,
+    executeD,
+    executeL,
+    executeR,
+    executeCommand,
     executeCommands,
-    executeCommand
+    executeBoundaries
 };
